@@ -46,3 +46,6 @@
 /QueryCache
 /wb.cfg
 /.opt
+/.wb_config
+/cfg/server/custom.cfg
+/cfg/server/local.cfg
