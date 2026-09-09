@@ -66,8 +66,7 @@ set_language() {
     case "$CURRENT_LANG" in
         ru)
             # Russo
-            L_BANNER="🛡️ WARFACEBOT MANAGER • ПАНЕЛЬ УПРАВЛЕНИЯ 🛡️"
-            L_SUBTITLE="WarfaceBot - Levak (Автор оригинала)"
+            L_BANNER="WARFACEBOT - Levak"
             L_STATUS_ONLINE="ONLINE"
             L_COL_PROFILE="ПРОФИЛЬ БОТА          "
             L_COL_ROOM="ИГРОВАЯ КОМНАТА           "
@@ -75,8 +74,8 @@ set_language() {
             L_LBL_NICK="Ник:      "
             L_LBL_RANK="Ранг:     "
             L_LBL_CLAN="Клан:     "
-            L_LBL_MONEY="Варбаксы: "
-            L_LBL_CROWNS="Короны:   "
+            L_LBL_MONEY="GP:       "
+            L_LBL_CROWNS="Crown:    "
             L_LBL_ROOM="Комната:  "
             L_LBL_MISSION="Миссия:   "
             L_LBL_HOST="Лидер:    "
@@ -129,8 +128,7 @@ set_language() {
             ;;
         pt)
             # Portugues Brasil
-            L_BANNER="🛡️ WARFACEBOT MANAGER • PAINEL DE CONTROLE 🛡️"
-            L_SUBTITLE="WarfaceBot - Levak (Autor Original)"
+            L_BANNER="WARFACEBOT - Levak"
             L_STATUS_ONLINE="ONLINE"
             L_COL_PROFILE="PERFIL DO BOT         "
             L_COL_ROOM="SALA DE JOGO              "
@@ -138,8 +136,8 @@ set_language() {
             L_LBL_NICK="Nick:     "
             L_LBL_RANK="Patente:  "
             L_LBL_CLAN="Cla:      "
-            L_LBL_MONEY="Warbucks: "
-            L_LBL_CROWNS="Coroas:   "
+            L_LBL_MONEY="GP:       "
+            L_LBL_CROWNS="Crown:    "
             L_LBL_ROOM="Sala:     "
             L_LBL_MISSION="Missao:   "
             L_LBL_HOST="Lider:    "
@@ -193,8 +191,7 @@ set_language() {
         *)
             # English (Default)
             CURRENT_LANG="en"
-            L_BANNER="🛡️ WARFACEBOT MANAGER • CONTROL PANEL 🛡️"
-            L_SUBTITLE="WarfaceBot - Levak (Original Author)"
+            L_BANNER="WARFACEBOT - Levak"
             L_STATUS_ONLINE="ONLINE"
             L_COL_PROFILE="BOT PROFILE           "
             L_COL_ROOM="GAME ROOM                 "
@@ -202,8 +199,8 @@ set_language() {
             L_LBL_NICK="Nick:     "
             L_LBL_RANK="Rank:     "
             L_LBL_CLAN="Clan:     "
-            L_LBL_MONEY="Warbucks: "
-            L_LBL_CROWNS="Crowns:   "
+            L_LBL_MONEY="GP:       "
+            L_LBL_CROWNS="Crown:    "
             L_LBL_ROOM="Room:     "
             L_LBL_MISSION="Mission:  "
             L_LBL_HOST="Leader:   "
@@ -480,8 +477,7 @@ render_dashboard() {
     fi
 
     echo -e "$BARRA"
-    echo -e "${BG_BLUE}          $L_BANNER          ${RESET}"
-    echo -e "${C_GRAY}                 $L_SUBTITLE                 ${RESET}"
+    echo -e "${BG_BLUE}                  $L_BANNER                  ${RESET}"
     echo -e "$BARRA"
     printf "${C_CYAN} BOT: ${C_WHITE}%-14s ${C_CYAN}SERVER: ${C_WHITE}%-17s ${C_CYAN}STATUS: ${status_color}%s${RESET}\n" \
         "$BOT_NICK" "$SERVER_IP:$SERVER_PORT" "$status_label"
