@@ -20,20 +20,20 @@ BARRA="${C_BLUE}━━━━━━━━━━━━━━━━━━━━━�
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="$SCRIPT_DIR/.wb_config"
 
-# Variaveis de Estado e Conexao
+# Variaveis de Estado e Conexao (defaults seguros - dados reais vem do .wb_config)
 SERVER_IP="127.0.0.1"
 SERVER_PORT="5222"
 GAME_VERSION="1.11700.452.21500"
-BOT_UID="3"
-BOT_TOKEN="o7qKqrKnZRUf"
-BOT_NICK="Player2"
+BOT_UID=""
+BOT_TOKEN=""
+BOT_NICK=""
 
 BOT_REALM="Local"
 BOT_CHANNEL="Lobby"
 BOT_STATUS_RAW="ONLINE"
-BOT_PING="Local"
-BOT_RANK="1"
-BOT_CLAN="Sem Cla"
+BOT_PING="--"
+BOT_RANK="--"
+BOT_CLAN="--"
 BOT_MONEY="--"
 BOT_CROWNS="--"
 
