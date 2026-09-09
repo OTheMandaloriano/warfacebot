@@ -26,21 +26,21 @@ SERVER_PORT="5222"
 GAME_VERSION="1.11700.452.21500"
 BOT_UID="3"
 BOT_TOKEN="o7qKqrKnZRUf"
-BOT_NICK="Spectre_197"
+BOT_NICK="Player2"
 
 BOT_REALM="Local"
-BOT_CHANNEL="Canal 01"
+BOT_CHANNEL="Lobby"
 BOT_STATUS_RAW="ONLINE"
-BOT_PING="15ms"
-BOT_RANK="20"
-BOT_CLAN="ClanPrime"
-BOT_MONEY="250.000"
-BOT_CROWNS="15.000"
+BOT_PING="Local"
+BOT_RANK="1"
+BOT_CLAN="Sem Cla"
+BOT_MONEY="--"
+BOT_CROWNS="--"
 
-ROOM_NAME="Room_#1042"
-ROOM_MODE="PvE"
-ROOM_MASTER="Host_01"
-ROOM_PLAYERS="4/5"
+ROOM_NAME="Lobby"
+ROOM_MODE="--"
+ROOM_MASTER="--"
+ROOM_PLAYERS="--"
 
 BOT_CLASS_ID=2 # 1=Fuzileiro, 2=Medico, 3=Engenheiro, 4=Sniper
 STATUS_READY="[OK]"
@@ -269,8 +269,8 @@ declare -a LOG_BUFFER=()
 init_log_buffer() {
     LOG_BUFFER=(
         "[18:31:00] Auto-aceite de amizade e convites de sala ativo."
-        "[00:58:41] Sessao encerrada."
-        "[00:59:16] Follow -> themandalorian"
+        "[00:58:41] Sessao anterior encerrada."
+        "[01:00:00] Painel pronto para operacao com Nick: $BOT_NICK."
     )
 }
 
@@ -403,20 +403,20 @@ run_setup_wizard() {
         BOT_TOKEN="$in_token"
     fi
 
-    echo -ne "  ${C_YELLOW}$L_WIZ_NICK ${C_WHITE}[${BOT_NICK:-Spectre_197}]: ${RESET}"
+    echo -ne "  ${C_YELLOW}$L_WIZ_NICK ${C_WHITE}[${BOT_NICK:-Player2}]: ${RESET}"
     read -r in_nick
     in_nick=$(clean_str "$in_nick")
-    BOT_NICK="${in_nick:-${BOT_NICK:-Spectre_197}}"
+    BOT_NICK="${in_nick:-${BOT_NICK:-Player2}}"
 
-    echo -ne "  ${C_YELLOW}Patente / Rank ${C_WHITE}[${BOT_RANK:-20}]: ${RESET}"
+    echo -ne "  ${C_YELLOW}Patente / Rank ${C_WHITE}[${BOT_RANK:-1}]: ${RESET}"
     read -r in_rank
     in_rank=$(clean_str "$in_rank")
-    BOT_RANK="${in_rank:-${BOT_RANK:-20}}"
+    BOT_RANK="${in_rank:-${BOT_RANK:-1}}"
 
-    echo -ne "  ${C_YELLOW}Cla / Clan ${C_WHITE}[${BOT_CLAN:-ClanPrime}]: ${RESET}"
+    echo -ne "  ${C_YELLOW}Cla / Clan ${C_WHITE}[${BOT_CLAN:-Sem Cla}]: ${RESET}"
     read -r in_clan
     in_clan=$(clean_str "$in_clan")
-    BOT_CLAN="${in_clan:-${BOT_CLAN:-ClanPrime}}"
+    BOT_CLAN="${in_clan:-${BOT_CLAN:-Sem Cla}}"
 
     save_bot_config
     echo ""
@@ -648,33 +648,37 @@ while true; do
             ;;
         4|04)
             echo ""
-            echo -ne "${C_CYAN}Nome da Missao PvE [PvE Special]: ${C_WHITE}"
+            echo -ne "${C_CYAN}Nome da Missao PvE: ${C_WHITE}"
             read -r in_m
             in_m=$(clean_str "$in_m")
-            ROOM_MODE="${in_m:-PvE Special}"
-            ROOM_NAME="Room_#$((RANDOM % 9000 + 1000))"
-            ROOM_MASTER="$BOT_NICK"
-            ROOM_PLAYERS="1/5"
-            fun_bar 0.4 "$L_OPT_PVE"
-            log_event "Sala PvE Criada: $ROOM_NAME ($ROOM_MODE)"
-            save_bot_config
+            if [[ -n "$in_m" ]]; then
+                ROOM_MODE="$in_m"
+                ROOM_NAME="PvE_$in_m"
+                ROOM_MASTER="$BOT_NICK"
+                ROOM_PLAYERS="1/5"
+                fun_bar 0.3 "$L_OPT_PVE"
+                log_event "Sala PvE Criada: $ROOM_NAME"
+                save_bot_config
+            fi
             ;;
         5|05)
             echo ""
-            echo -ne "${C_CYAN}Nome do Mapa PvP [PvP TDM]: ${C_WHITE}"
+            echo -ne "${C_CYAN}Nome do Mapa PvP: ${C_WHITE}"
             read -r in_m
             in_m=$(clean_str "$in_m")
-            ROOM_MODE="${in_m:-PvP TDM}"
-            ROOM_NAME="PvP_#$((RANDOM % 9000 + 1000))"
-            ROOM_MASTER="$BOT_NICK"
-            ROOM_PLAYERS="1/16"
-            fun_bar 0.4 "$L_OPT_PVP"
-            log_event "Sala PvP Criada: $ROOM_NAME ($ROOM_MODE)"
-            save_bot_config
+            if [[ -n "$in_m" ]]; then
+                ROOM_MODE="$in_m"
+                ROOM_NAME="PvP_$in_m"
+                ROOM_MASTER="$BOT_NICK"
+                ROOM_PLAYERS="1/16"
+                fun_bar 0.3 "$L_OPT_PVP"
+                log_event "Sala PvP Criada: $ROOM_NAME"
+                save_bot_config
+            fi
             ;;
         6|06)
-            fun_bar 0.4 "$L_OPT_START"
-            ROOM_PLAYERS="4/5 [PLAYING]"
+            fun_bar 0.3 "$L_OPT_START"
+            ROOM_PLAYERS="Partida em andamento"
             log_event "$L_OPT_START: $ROOM_NAME"
             save_bot_config
             ;;
@@ -683,7 +687,7 @@ while true; do
             ROOM_NAME="Lobby"
             ROOM_MODE="--"
             ROOM_MASTER="--"
-            ROOM_PLAYERS="0/0"
+            ROOM_PLAYERS="--"
             STATUS_READY="[--]"
             log_event "$L_OPT_LEAVE: Lobby"
             save_bot_config
@@ -740,9 +744,7 @@ while true; do
             echo ""
             printf "${C_CYAN}%-20s %-15s %-20s${RESET}\n" "NICKNAME" "STATUS" "LOCATION"
             echo -e "${C_BLUE}------------------------------------------------------------------------${RESET}"
-            printf "${C_WHITE}%-20s ${C_GREEN}%-15s ${C_YELLOW}%-20s${RESET}\n" "Player_Alfa" "Online" "Room #1042"
-            printf "${C_WHITE}%-20s ${C_GREEN}%-15s ${C_GRAY}%-20s${RESET}\n" "Player_Beta" "Online" "In Lobby"
-            printf "${C_WHITE}%-20s ${C_RED}%-15s ${C_GRAY}%-20s${RESET}\n" "Player_Gamma" "Offline" "--"
+            printf "${C_GRAY}%-20s %-15s %-20s${RESET}\n" "Nenhum amigo online" "--" "--"
             echo -e "${C_BLUE}------------------------------------------------------------------------${RESET}"
             echo ""
             echo -ne "${C_YELLOW}$L_PRESS_ENTER${RESET}"
