@@ -57,53 +57,49 @@ A arquitetura é dividida em duas etapas principais:
 
 ## <img src="https://api.iconify.design/solar:monitor-smartphone-bold.svg?color=%233B82F6&width=20" align="top" /> Novidade: Painel Interativo de Console (Dashboard v2.0)
 
-Neste fork foi introduzido o `wb_dashboard.sh`, um painel interativo no terminal projetado para administração ágil de sessões. Ele traz ergonomia visual, telemetria de conexão e acesso rápido a todas as funções:
+Neste fork foi introduzido o `wb_dashboard.sh` (e o atalho `dashboard.bat`), um painel interativo no terminal projetado para administração ágil e confiável de sessões. Ele realiza diagnóstico de conectividade do servidor em tempo real (socket test) e entrega controle direto ao console nativo do bot:
 
 ```text
-  ========================================================================
-    WARFACEBOT • PAINEL DE CONTROLE | Levak
-  ========================================================================
-   BOT: Shadow_104     SERVER: 127.0.0.1:5222    STATUS: ONLINE [OK]
-  ========================================================================
-  PERFIL DO BOT           SALA DE JOGO              SISTEMA E REDE
-  Nick:     Shadow_104    Sala:     Lobby_PvE       Ping:      12ms
-  Rank:     1             Missao:   Normal          Uptime:    00:15:32
-  Clan:     Sem Cla       Lider:    Shadow_104      Memoria:   34.5 MB
-  GP$:      50000         Jogadores:1/5             Threads:   5 Active
-  Coroas:   500
-  ========================================================================
-  CLASSE: [Fuzileiro]  PRONTO: NAO  AUTO-SEGUIR: SIM
-  ========================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             WARFACEBOT • PAINEL DE CONTROLE | Levak             
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ --- PARAMETROS DE CONEXAO ---
+  Servidor / Host:  127.0.0.1:5222
+  Versao do Jogo:   1.11700.452.21500
+  UID da Conta:     3
+  Codinome / Nick:  Falcon_623
+  Status da Rede:   ONLINE [PORTA ABERTA]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  [01] • CONECTAR AO JOGO (SESSAO REAL)   [08] • SEGUIR JOGADOR
-  [02] • ALTERAR CLASSE                   [09] • PASSAR LIDER
-  [03] • PRONTO / NAO PRONTO              [10] • CONVIDAR AMIGO
-  [04] • CRIAR SALA PVE                   [11] • ADICIONAR AMIGO (ENVIAR)
-  [05] • CRIAR SALA PVP                   [12] • LISTA DE AMIGOS
-  [06] • INICIAR PARTIDA                  [13] • DETALHES DO BOT
-  [07] • SAIR DA SALA                     [14] • CONFIGURAR CONTA/SERVIDOR
-                                          [15] • ALTERAR IDIOMA
-                                          [00] • DESCONECTAR E SAIR <<<
+  [01] • CONECTAR AO JOGO (SESSAO REAL - wb.exe)
+  [02] • TESTAR CONEXAO COM O SERVIDOR (SOCKET TEST)
+  [03] • CONFIGURAR CONTA E SERVIDOR (WIZARD)
+  [04] • ALTERAR IDIOMA (LANGUAGE)
+  [00] • SAIR <<<
 
-  ========================================================================
-  [*] NOTIFICACOES E EVENTOS RECENTES:
-    [18:30:10] Conectado com sucesso ao servidor XMPP (127.0.0.1:5222).
-    [18:30:30] Bot pronto para operacao sob o nick: Shadow_104.
-    [18:31:00] Auto-aceite de amizade e convites de sala ativo.
-  ========================================================================
-
-  Escolha uma opcao :
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Escolha uma opcao : 
 ```
 
 ### Características do Dashboard
-- **Assistente de Onboarding (Setup Wizard)**: No primeiro uso, o painel pergunta o idioma preferido (`Português`, `English`, `Русский`) e guia a configuração do servidor (IP/Porta), versão do Warface e credenciais da conta do bot (com opção de gerar codinomes aleatórios como `Shadow_421`).
-- **Auto-Login e Sessão Persistente**: Salva com segurança as definições locais em `.wb_config` e gera o arquivo `cfg/server/custom.cfg` (ambos protegidos no `.gitignore`). Nas execuções seguintes, o painel abre diretamente sem refazer perguntas.
-- **Conexão Real ao Jogo [01]**: Inicia o executável `wb.exe` conectando diretamente ao servidor configurado com o token e UID da conta.
-- **Ajuda In-Game por Sussurro**: Qualquer mensagem enviada para o bot no chat privado (`/w <NomeDoBot> help`) recebe como resposta a lista de comandos suportados:
-  `[WarfaceBot] Comandos: ready [classe] | unready | switch | start | leave | master | stay | invite`
-- **Gestão de Amigos e Auto-Aceite [11]**: O bot aceita automaticamente solicitações de amizade recebidas e permite enviar novos pedidos de amizade diretamente pelo menu do terminal.
-- **Alternância Instantânea de Idioma [15]**: Permite trocar o idioma da interface a qualquer momento.
-- **Entrada Híbrida**: Permite navegar pelas opções numéricas (`01` a `15`) ou digitar comandos manuais (`open`, `say`, `quit`, `stats`).
+- **Diagnóstico Real de Rede [02]**: Testa a abertura e responsividade da porta de conexão do servidor XMPP diretamente no terminal antes de iniciar a sessão.
+- **Assistente de Onboarding (Setup Wizard) [03]**: Guia a configuração do servidor (IP/Porta), versão do Warface e credenciais da conta do bot (com opção de gerar codinomes aleatórios).
+- **Auto-Login e Sessão Persistente**: Salva as definições locais em `.wb_config` e gera o arquivo `cfg/server/custom.cfg` (ambos protegidos no `.gitignore`).
+- **Conexão Real ao Jogo [01]**: Inicia o executável nativo `wb.exe` com autenticação TLS/SASL no servidor selecionado, exibindo a cola rápida de comandos e transferindo o controle para o prompt interativo `CMD# `:
+  - `friends`: Lista amigos no servidor;
+  - `follow <jogador>`: Entra na mesma sala de um jogador;
+  - `invite <jogador>`: Convida jogador para a sua sala;
+  - `ready [classe]`: Fica pronto e/ou altera classe (`medic`, `rifleman`, `engineer`, `sniper`);
+  - `unready`: Cancela prontidão na sala;
+  - `open <mapa/missao>`: Cria sala PvE ou PvP;
+  - `start`: Inicia a partida (quando dono da sala);
+  - `leave`: Sai da sala atual;
+  - `master <jogador>`: Transfere a liderança da sala;
+  - `say <mensagem>`: Mensagem no chat da sala;
+  - `whisper <jogador> <msg>`: Envia sussurro privado;
+  - `stats`: Estatísticas da sessão atual;
+  - `quit`: Desconecta com segurança e retorna ao dashboard.
+- **Suporte Multi-idioma [04]**: Suporte nativo completo para Português (Brasil), English e Русский.
 
 ---
 

@@ -57,53 +57,49 @@ It is composed of two parts, similarly to the game:
 
 ## <img src="https://api.iconify.design/solar:monitor-smartphone-bold.svg?color=%233B82F6&width=20" align="top" /> New: Interactive Console Dashboard (v2.0)
 
-This fork introduces `wb_dashboard.sh`, an interactive terminal dashboard designed for streamlined session management. It delivers immediate visual telemetry, channel monitoring, and fast command triggers:
+This fork introduces `wb_dashboard.sh` (and shortcut `dashboard.bat`), an interactive terminal dashboard designed for streamlined, reliable session management. It runs real-time server connectivity diagnostics (socket test) and hands direct control to the bot's native console:
 
 ```text
-  ========================================================================
-    WARFACEBOT • CONTROL PANEL | Levak
-  ========================================================================
-   BOT: Shadow_104     SERVER: 127.0.0.1:5222    STATUS: ONLINE [OK]
-  ========================================================================
-  BOT PROFILE             GAME ROOM                 SYSTEM & NETWORK
-  Nick:     Shadow_104    Room:     Lobby_PvE       Ping:      12ms
-  Rank:     1             Mission:  Normal          Uptime:    00:15:32
-  Clan:     No Clan       Leader:   Shadow_104      Memory:    34.5 MB
-  Money:    50000         Players:  1/5             Threads:   5 Active
-  Crowns:   500
-  ========================================================================
-  CLASS: [Rifleman]  READY: NO  AUTO-FOLLOW: YES
-  ========================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+             WARFACEBOT • CONTROL PANEL | Levak             
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ --- CONNECTION PARAMETERS ---
+  Server Host / IP: 127.0.0.1:5222
+  Game Version:     1.11700.452.21500
+  Account UID:      3
+  Bot Nickname:     Falcon_623
+  Network Status:   ONLINE [PORT OPEN]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  [01] • CONNECT TO GAME (LIVE SESSION)   [08] • FOLLOW PLAYER
-  [02] • CHANGE CLASS                     [09] • TRANSFER LEADER
-  [03] • TOGGLE READY                     [10] • INVITE FRIEND
-  [04] • CREATE PVE ROOM                  [11] • ADD FRIEND (SEND INVITE)
-  [05] • CREATE PVP ROOM                  [12] • FRIENDS LIST
-  [06] • START MATCH                      [13] • BOT DETAILS
-  [07] • LEAVE ROOM                       [14] • CONFIGURE ACCOUNT/SERVER
-                                          [15] • CHANGE LANGUAGE
-                                          [00] • DISCONNECT & EXIT <<<
+  [01] • CONNECT TO GAME (REAL SESSION - wb.exe)
+  [02] • TEST SERVER CONNECTION (SOCKET TEST)
+  [03] • CONFIGURE ACCOUNT & SERVER (WIZARD)
+  [04] • CHANGE LANGUAGE
+  [00] • EXIT <<<
 
-  ========================================================================
-  [*] RECENT NOTIFICATIONS & EVENTS:
-    [18:30:10] Successfully connected to XMPP server (127.0.0.1:5222).
-    [18:30:30] Bot ready for operation under nickname: Shadow_104.
-    [18:31:00] Auto-accept friend requests and room invites active.
-  ========================================================================
-
-  Choose an option :
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Choose an option : 
 ```
 
 ### Dashboard Features
-- **Onboarding Setup Wizard**: On initial launch, the dashboard prompts for your preferred language (`English`, `Русский`, `Português`) and walks through configuring server settings (IP/Port), game version, and account credentials (with an automatic tactical random nick generator like `Shadow_421` if needed).
-- **Auto-Login & Persistent Config**: Safely writes credentials locally to `.wb_config` and outputs `cfg/server/custom.cfg` (both protected in `.gitignore`). Subsequent launches connect immediately without repeating prompts.
-- **Direct Live Session Connection [01]**: Spawns `wb.exe` directly, connecting with your configured account token and custom server configuration.
-- **In-Game Whisper Help**: Whispering `/w <BotNick> help` (or any unknown message) in-game automatically replies with the list of supported bot commands:
-  `[WarfaceBot] Commands: ready [class] | unready | switch | start | leave | master | stay | invite`
-- **Friend Management & Auto-Accept [11]**: Automatically approves incoming friend requests and enables sending outgoing friend requests directly from the terminal menu.
-- **Instant Language Switching [15]**: Switch between English, Russian, and Portuguese at any time.
-- **Hybrid Input**: Supports numeric menu selection (`01` through `15`) or direct bot console commands (`open`, `say`, `quit`, `stats`).
+- **Live Network Diagnostic [02]**: Verifies if the XMPP server port is actively open and listening before starting a session.
+- **Onboarding Setup Wizard [03]**: Guides initial setup for server host/port, game version, and bot credentials (with random tactical nick generation).
+- **Persistent Local Config**: Safely saves local settings to `.wb_config` and outputs `cfg/server/custom.cfg` (both protected by `.gitignore`).
+- **Real In-Game Connection [01]**: Spawns native `wb.exe` with TLS/SASL authentication, displays a full command cheatsheet, and hands interactive control over to the live `CMD# ` prompt:
+  - `friends`: List account friends on server;
+  - `follow <nickname>`: Follow a player into their room;
+  - `invite <nickname>`: Invite a player into your room;
+  - `ready [class]`: Toggle ready and/or select class (`medic`, `rifleman`, `engineer`, `sniper`);
+  - `unready`: Cancel ready state;
+  - `open <mission/map>`: Create PvE or PvP room;
+  - `start`: Start the match (when Room Master);
+  - `leave`: Leave current room;
+  - `master <nickname>`: Transfer room master leadership;
+  - `say <message>`: Send message to room chat;
+  - `whisper <nickname> <msg>`: Send private whisper;
+  - `stats`: Display session stats;
+  - `quit`: Disconnect cleanly and return to dashboard.
+- **Multi-language Support [04]**: Full native translation for English, Русский, and Português (Brasil).
 
 ---
 
